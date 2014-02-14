@@ -5,14 +5,17 @@ class Test extends MY_Controller
     {
         $tes='ci 2.1.4 + smarty 3.1.15 配置成功';
         $this->assign('tes',$tes);
-        $this->display('tes.html');
+        $this->display('template/tes.html');
     }
 
     public function aaaa()
     {
         $test='tingshuokeyiyouneirong';
         $this->assign('test',$test);
-        $this->display('test.html');
+    	var_dump("fdsf111111");
+        $this->display('template/test.html');
+    	var_dump("fdsf122221");
+
     }
 
     public function bbbb()
@@ -21,6 +24,6 @@ class Test extends MY_Controller
         $side='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
         $this->assign('side',$side);
         $this->assign('test',$test);
-        $this->display('side.html');
+        $this->display('template/side.html');
     }
 }
