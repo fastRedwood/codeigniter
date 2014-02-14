@@ -6,5 +6,5 @@ $config['template_dir']        =     APPPATH.'views/template'; //设置模板目
 $config['compile_dir']         =     APPPATH.'views/template_c'; //设置编译目录
 $config['cache_dir']         =     APPPATH.'cache';//缓存文件夹
 $config['use_sub_dirs']     =     true;   //子目录变量（是否在缓存文件夹中生成子目录）
-$config['left_delimiter']     =     '<{';
-$config['right_delimiter']     =     '}>';
+$config['left_delimiter']     =     '{{';
+$config['right_delimiter']     =     '}}';

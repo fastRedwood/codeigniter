@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta charset="utf-8">
-	<title>测试Smarty继承页面</title> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="/bundles/topxiaweb/css/style.css?8" rel="stylesheet" fmedia="screen" />
-	<script src="/uilibs/jquery/1.10.2/jquery-1.10.2.min.js" id="seajsnode"></script>
-</head>
-<body>
-
-</body>
-</html>
+{{extends file="tes.html"}}
+{{block name="content"}}
+<div>
+	{{$test}}
+</div>
+{{block name="side"}}{{/block}}
+{{/block}}
