@@ -8,4 +8,4 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 
-application/views/template_c/*
+/application/views/template_c/*
