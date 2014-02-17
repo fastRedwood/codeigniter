@@ -5,6 +5,6 @@ class Welcome extends MY_Controller
     {
         $test='ci 2.1.4 + smarty 3.1.15 配置成功';
         $this->assign('test',$test);
-        $this->display('template/index.html');
+        $this->display('index.html');
     }
 }
