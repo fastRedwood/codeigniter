@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('Ci_smarty');
+$autoload['libraries'] = array('Ci_smarty', 'database', 'session', 'MY_lib');
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('Ci_smarty');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
+$autoload['helper'] = array('utilities');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array();
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('parameters');
 
 
 /*
