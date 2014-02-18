@@ -6,6 +6,9 @@ class User extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->library('User_lib');
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+		$this->form_validation->set_error_delimiters('<p class="error">ddddd', '</p>');
 	}
 
 	public function register()
@@ -15,7 +18,7 @@ class User extends MY_Controller
 
     	//提交表单
     	$data = $this->input->post(NULL, TRUE); 
-    	if(isset($data))
+    	if($data)
 		{
 			//@todo 后台验证email格式是否正确
 
@@ -34,208 +37,63 @@ class User extends MY_Controller
         $this->display('web/register/index.html.tpl');
     }
 
-	// function login()
-	// {
-	// 	$this->load->library('Event_lib');
-	// 	$this->load->library('Relation_lib');
+	function login()
+	{	
+		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_check_email_for_login');
+		$this->form_validation->set_rules('password', '密码', 'required');
 
-	// 	$event_key	= $this->input->get('event_key');
-	// 	$event_id 	= iif(isset($event_key), $this->user_lib->get_a_value(TABLE_EVENTS, 'guid', array('event_key'=>$event_key)), NULL);
-	// 	if ( ! empty($event_key) && $this->_login_status)
-	// 	{
-	// 		$this->logout($event_key);
-	// 	}
-	// 	else
-	// 	{
-	// 		if($this->_login_status)
-	// 		{
-	// 			if ($this->relation_lib->check_a_relation($this->_guid, $this->_event_id, RELATION_EVENT_CONFIRMED))
-	// 			{
-	// 				redirect('dashboard/schedule','refresh');
-	// 			}
-	// 			else
-	// 			{
-	// 				redirect('user/profile','refresh');
-	// 			}
-	// 		}
-	// 	}
+		$this->form_validation->set_message('required', '%s不能为空');
+		$this->form_validation->set_message('valid_email', '邮箱格式有误.');
 
-	// 	$this->form_validation->set_rules('event', '会议活动', 'required');
-	// 	$this->form_validation->set_rules('email', '电子邮箱', 'required|valid_email|callback_check_email_for_login');
-	// 	//$this->form_validation->set_rules('password', '密码', 'required');
 
-	// 	$this->form_validation->set_message('required', '%s为必填项，不能为空。');
-	// 	$this->form_validation->set_message('valid_email', '您输入的是无效的%s地址。');
+		$vistor = $this->input->post(NULL, TRUE);
+    	if($this->input->post(NULL, TRUE))
+		{
 
-	// 	if(CI_POST('submit'))
-	// 	{
-	// 		$email		= CI_POST('email');
-	// 		$password	= CI_POST('password');
-	// 		$remember	= CI_POST('remember');
-	// 		$event_id	= CI_POST('event');
-	// 	}
+			if ( !$this->form_validation->run() )
+			{
+				echo "222222";
+			}
+			else
+			{
+				echo "333333";
+			}
+		}
 
-	// 	$time = time();
-	// 	$condition	= "(entities.visibility = 1) AND ";
-	// 	$condition .= "($time > events.register_open_time AND $time < events.close_time) AND ";
-	// 	$condition .= "(events.is_access_selective = 1) AND ";
+		// $condition	= "(entities.visibility = 1) AND ";
+		// $condition .= "($time > events.register_open_time AND $time < events.close_time) AND ";
+		// $condition .= "(events.is_access_selective = 1) AND ";
 
-	// 	$data['events'] 	= $this->event_lib->get_all_events($condition);
-	// 	$data['msg']		= NULL;
-	// 	$data['event_id'] 	= $event_id;
-	// 	$data['event_key']  = $event_key;
+		// $data['events'] 	= $this->event_lib->get_all_events($condition);
+		// $data['event_id'] 	= $event_id;
+		// $data['event_key']  = $event_key;
 
-	// 	if ($this->form_validation->run())
-	// 	{
-	// 		//if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE)) redirect('dashboard','refresh');
+		// if ($this->form_validation->run())
+		// {
+		// 	//if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE)) redirect('dashboard','refresh');
 
-	// 		if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE))
-	// 		{
-	// 			redirect('user/login', 'refresh');
-	// 		}
-	// 		else
-	// 		{
-	// 			$data['msg'] = $this->user_lib->get_a_msg();
-	// 		}
-	// 	}
+		// 	if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE))
+		// 	{
+		// 		redirect('user/login', 'refresh');
+		// 	}
+		// 	else
+		// 	{
+		// 		$data['msg'] = $this->user_lib->get_a_msg();
+		// 	}
+		// }
 
-	// 	$nav = array('login_status' => $this->_login_status, 'class' => $this->_class, 'method' => $this->_method);
-	// 	$this->tpl->title('登陆价值传媒会议管理系统');
-	// 	$this->tpl->set_layout('login','public');
-	// 	$this->tpl->set_partial('header','public/partial/header', $nav);
-	// 	$this->tpl->build('public/user/user_login', $data);
-	// }
-
-	// function profile()
-	// {
-	// 	$this->access_control();
-	// 	$this->load->library('Option_lib');
-	// 	$this->load->library('Relation_lib');
-
-	// 	$condition = array('guid'=>$this->_event_id);
-	// 	$event = array(
-	// 		'event_id' 		=> $this->_event_id,
-	// 		'event_title' 	=> $this->user_lib->get_a_value(TABLE_CORE_ENTITIES, 'title', $condition),
-	// 		'open_time'		=> date('Y.m.d', $this->user_lib->get_a_value(TABLE_EVENTS, 'open_time', $condition)),
-	// 		'close_time' 	=> date('Y.m.d', $this->user_lib->get_a_value(TABLE_EVENTS, 'close_time', $condition))
-	// 	);
-
-	// 	$event_key 				= $this->user_lib->get_a_value(TABLE_EVENTS, 'event_key', $condition);
-	// 	$condition 				= array('type' => 'venue_event');
-	// 	$relation_type_id 		= $this->user_lib->get_a_value(TABLE_RELATION_TYPES, 'id', $condition);
-
-	// 	$condition 				= array('relation' => $relation_type_id, 'passive_guid' => $this->_event_id);
-	// 	$venue_guid 			= $this->user_lib->get_a_value(TABLE_RELATIONS, 'active_guid', $condition);
-
-	// 	$condition 				= array('guid' => $venue_guid);
-	// 	$event['venue_title'] 	= $this->user_lib->get_a_value(TABLE_CORE_ENTITIES, 'title', $condition);
-	// 	$event['event_address'] = $this->user_lib->get_a_value(TABLE_VENUE, 'address', $condition);
-
-	// 	$condition 				= NULL;
-	// 	$authorization 			= $this->config->item('authorization');
-	// 	if(strlen($event_key) >0) $condition .= "event_key = '$event_key' AND ";
-	// 	else $condition .= "source = '$authorization' AND ";
-
-	// 	if(CI_POST('submit'))
-	// 	{
-	// 		$name 			= CI_POST('name');
-	// 		$gender			= CI_POST('gender');
-	// 		$education		= CI_POST('education');
-	// 		$company		= CI_POST('company');
-	// 		$company_type	= CI_POST('company_type');
-	// 		$title			= CI_POST('title');
-	// 		$department		= CI_POST('department');
-	// 		$sector			= CI_POST('sector');
-	// 		$duty			= CI_POST('duty');
-	// 		$address		= CI_POST('address');
-	// 		$postcode		= CI_POST('postcode');
-	// 		$telephone		= CI_POST('telephone');
-	// 		$mobile			= CI_POST('mobile');
-	// 		$country		= CI_POST('country');
-	// 		$province		= CI_POST('province');
-	// 		$city			= CI_POST('city');
-
-	// 		$year			= CI_POST('year');
-	// 		$month			= CI_POST('month');
-	// 		$day			= CI_POST('day');
-
-	// 		$birthday		= $year.'-'.$month.'-'.$day;
-
-	// 		if(!empty($year) AND !empty($month) AND !empty($day)) $birthday = std_unix_time_conversion($birthday);
-	// 		else $birthday = NULL;
-	// 	}
-	// 	else
-	// 	{
-	// 		$fields = array(
-	// 			'userdata' => array('*')
-	// 		);
-	// 		$member			= $this->member_lib->get_member_details($this->_guid, $fields, $condition);
-	// 		$name			= $member[0]['name'];
-	// 		$gender			= $member[0]['gender'];
-	// 		$education		= $member[0]['education'];
-	// 		$company		= $member[0]['company'];
-	// 		$company_type	= $member[0]['company_type'];
-	// 		$title			= $member[0]['title'];
-	// 		$department		= $member[0]['department'];
-	// 		$sector			= $member[0]['sector'];
-	// 		$duty			= $member[0]['duty'];
-	// 		$address		= $member[0]['address'];
-	// 		$postcode		= $member[0]['postcode'];
-	// 		$telephone		= $member[0]['telephone'];
-	// 		$mobile			= $member[0]['mobile'];
-	// 		$country		= $member[0]['country'];
-	// 		$province		= $member[0]['province'];
-	// 		$city			= $member[0]['city'];
-	// 		$birthday		= $member[0]['birthday'];
-	// 	}
-
-	// 	$data = array(
-	// 		'name' 			=> $name,
-	// 		'gender'		=> $gender,
-	// 		'education'		=> $education,
-	// 		'company'		=> $company,
-	// 		'company_type'	=> $company_type,
-	// 		'title'			=> $title,
-	// 		'department'	=> $department,
-	// 		'sector'		=> $sector,
-	// 		'duty'			=> $duty,
-	// 		'address'		=> $address,
-	// 		'postcode'		=> $postcode,
-	// 		'telephone'		=> $telephone,
-	// 		'mobile'		=> $mobile,
-	// 		'country'		=> $country,
-	// 		'province'		=> $province,
-	// 		'city'			=> $city,
-	// 		'birthday'		=> $birthday
-	// 	);
-
-	// 	if(CI_POST('submit') AND $this->user_lib->update_a_userdata_record($this->_guid, $data, $event_key))
-	// 	{
-	// 		$msg = "您的个人资料已经更新成功。";
-	// 		$this->user_lib->set_a_msg($msg, 'info');
-	// 	}
-
-	// 	$data['educations'] 	= $this->option_lib->get_options('degree');
-	// 	$data['company_types'] 	= $this->option_lib->get_options('type');
-	// 	$data['sectors'] 		= $this->option_lib->get_options('sector');
-	// 	$data['duties'] 		= $this->option_lib->get_options('duty');
-	// 	$data['msg']			= $this->user_lib->get_a_msg();
-
-	// 	$nav = array(
-	// 		'login_status' => $this->_login_status,
-	// 		'class' => $this->_class,
-	// 		'method' => $this->_method,
-	// 		'event_id' => $this->_event_id
-	// 	);
-
-	// 	$this->tpl->set_partial('header','public/partial/header', $nav);
-	// 	$this->tpl->title('修改个人资料');
-	// 	$this->tpl->set_partial('title','public/partial/title', array('header_title'=>'设置个人资料'));
-	// 	$this->tpl->set_partial('sidebar','public/partial/sidebar',$event);
-	// 	$this->tpl->build('public/user/profile_form', $data);
-	// }
-
-	
+		// $nav = array('login_status' => $this->_login_status, 'class' => $this->_class, 'method' => $this->_method);
+		// $this->tpl->title('登陆价值传媒会议管理系统');
+		// $this->tpl->set_layout('login','public');
+		// $this->tpl->set_partial('header','public/partial/header', $nav);
+		// $this->tpl->build('public/user/user_login', $data);
+		// var_dump($data['error']);
+		$this->assign(array(
+			'error' => isset($data['error']) ? $data['error'] : '', 
+			'message' => isset($data['message']) ? $data['message'] : '',
+		));
+		$this->display('web/login/index.html.tpl');
+	}
 
 	function logout($event_key = '')
 	{

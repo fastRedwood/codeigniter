@@ -1,4 +1,6 @@
 {{extends file="web/layout.html.tpl"}}
+{{block name="title" prepend}} 注 册 {{/block}}
+
 {{block name="content"}}
 
 <div class="inner">
@@ -6,6 +8,7 @@
 	<article class="main">
 		<div class="inner-main">
 			<div class="login-form">
+				<a href="{{site_url url='user/login'}}" >我要登录！！</a>
 				<form action="{{site_url url='user/register'}}" method="POST">
 					<div class="message">
 					<?php
@@ -27,7 +30,13 @@
 						<span>密码</span>
 						<input type="password" name="password">
 					</div>
-					<div class="submit"><input type="submit" name="submit" value="登录">&nbsp;&nbsp;&nbsp;<a href="<?php echo $retrieve_pwd_url; ?>">找回密码</a></div>
+					<div class="input">
+						<span>在输入一次密码</span>
+						<input type="password" name="password">
+					</div>
+					<div class="submit">
+						<input type="submit" name="submit" value="注 册">
+					</div>
 				</form>
 			</div>
 		</div>
