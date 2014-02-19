@@ -24,7 +24,6 @@ class User extends MY_Controller
 			//@todo 后台验证email格式是否正确
 
 			//@todo 后台验证email是否存在
-
 			$user = $this->user_lib->new_user($data);
 
 		}
@@ -53,44 +52,16 @@ class User extends MY_Controller
 		{
 			if($this->user_lib->login($vistor))
 			{
-				redirect('user/login', 'refresh');
+				redirect('welcome', 'refresh');
+		
 			}
 			else
 			{
 				// $data['msg'] = $this->user_lib->get_a_msg();
 			}
+			var_dump("endendend");
 		}
-		var_dump("endendend");
 
-
-		// $condition	= "(entities.visibility = 1) AND ";
-		// $condition .= "($time > events.register_open_time AND $time < events.close_time) AND ";
-		// $condition .= "(events.is_access_selective = 1) AND ";
-
-		// $data['events'] 	= $this->event_lib->get_all_events($condition);
-		// $data['event_id'] 	= $event_id;
-		// $data['event_key']  = $event_key;
-
-		// if ($this->form_validation->run())
-		// {
-		// 	//if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE)) redirect('dashboard','refresh');
-
-		// 	if($this->user_lib->public_login($event_id, $email, $password, $remember = FALSE))
-		// 	{
-		// 		redirect('user/login', 'refresh');
-		// 	}
-		// 	else
-		// 	{
-		// 		$data['msg'] = $this->user_lib->get_a_msg();
-		// 	}
-		// }
-
-		// $nav = array('login_status' => $this->_login_status, 'class' => $this->_class, 'method' => $this->_method);
-		// $this->tpl->title('登陆价值传媒会议管理系统');
-		// $this->tpl->set_layout('login','public');
-		// $this->tpl->set_partial('header','public/partial/header', $nav);
-		// $this->tpl->build('public/user/user_login', $data);
-		// var_dump($data['error']);
 		$this->assign(array(
 			'error' => isset($data['error']) ? $data['error'] : '', 
 			'message' => isset($data['message']) ? $data['message'] : '',
@@ -98,24 +69,26 @@ class User extends MY_Controller
 		$this->display('web/login/index.html.tpl');
 	}
 
-	function logout($event_key = '')
+	function logout()
 	{
 		$this->user_lib->logout();
-		if($this->_group_id == S_ADMIN_GROUP)
-		{
-			redirect('/admin','refresh');
-		}
-		else
-		{
-			if ( ! empty($event_key))
-			{
-				redirect('/?event_key='.$event_key,'refresh');
-			}
-			else
-			{
-				redirect('/');
-			}
-		}
+		// if($this->_group_id == S_ADMIN_GROUP)
+		// {
+		// 	redirect('/admin','refresh');
+		// }
+		// else
+		// {
+		// 	if ( ! empty($event_key))
+		// 	{
+		// 		redirect('/?event_key='.$event_key,'refresh');
+		// 	}
+		// 	else
+		// 	{
+		// 		redirect('/');
+		// 	}
+		// }
+
+		redirect('/');
 	}
 
 	//检查注册邮箱是否已经注册。如果没有注册过，返回false,　并输出错误信息。
