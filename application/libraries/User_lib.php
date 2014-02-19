@@ -83,11 +83,11 @@ class User_lib extends MY_lib
         
     }
 
-    function logout2222222()
-    {
-        if ($this->ci->input->cookie($this->ci->config->item('autologin_cookie'))) $this->delete_autologin();
-        return $this->ci->session->sess_destroy();
-    }
+    // function logout2222222()
+    // {
+    //     if ($this->ci->input->cookie($this->ci->config->item('autologin_cookie'))) $this->delete_autologin();
+    //     return $this->ci->session->sess_destroy();
+    // }
 
 
 
