@@ -3,14 +3,14 @@ class Test extends MY_Controller
 {
     public function index()
     {
-        $tes='ci 2.1.4 + smarty 3.1.15 配置成功';
+        $tes='adminadmin';
         $this->assign('tes',$tes);
         $this->display('tes.html');
     }
 
     public function aaaa()
     {
-        $test='tingshuokeyiyouneirong';
+        $test='admin';
         $this->assign('test',$test);
         $this->display('test.html');
     }
