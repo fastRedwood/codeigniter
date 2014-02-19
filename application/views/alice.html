@@ -22,7 +22,11 @@
     <div class="wrapper">
         <div class="ui-grid-row">
             <div class="ui-grid-25">
-                <h1>这是一个简陋的页面</h1>
+
+                <h1>Hello ! {{$user.email|default:'你还未登录'}}</h1>
+                {{if !$user.email}}
+                    <a href="{{site_url url='user/login'}}">现在登录</a>
+                {{/if}}
             </div>
         </div>
         <div class="ui-grid-row">
@@ -45,15 +49,15 @@
                             <li class="ui-nav-subitem"><a href="#">二级导航 2-3</a></li>
                         </ul>
                         </li>
-                        <li class="ui-nav-item">
-                        <a href="#">一级导航 3</a>
-                        <ul class="ui-nav-submain">
-                            <li class="ui-nav-subitem"><a href="#">二级导航 3-1</a></li>
-                            <li class="ui-nav-subitem"><a href="#">二级导航 3-2</a></li>
-                            <li class="ui-nav-subitem ui-nav-subitem-current"><a href="#">二级导航 3-3</a></li>
-                        </ul>
-                        </li>
-                        <li class="ui-nav-item"><a href="#">一级导航 4</a></li>
+                        {{if isset($user.email) }}
+                            <li class="ui-nav-item">
+                                <a href="#">后台管理</a>
+                            </li>
+                            
+                            <li class="ui-nav-item">
+                                <a href="{{site_url url='user/logout'}}">退出登录</a>
+                            </li>
+                        {{/if}}
                     </ul>
                     <div class="ui-nav-subcontainer"></div>
                 </div>

@@ -31,6 +31,8 @@ class User_lib extends MY_lib
 
     public function login($vistor)
     {
+        // $result = FALSE;
+
         if ($this->is_email_available($vistor['email'])) 
         {
             // throw new Exception('Email不存在');
@@ -53,35 +55,14 @@ class User_lib extends MY_lib
 
             $data = array('user' => $user, 'is_login' => 1);
             $this->ci->session->set_userdata($data);//写入sesssion中
-            
+            return true;
             // if($remember) $this->create_autologin($data['guid'], $user['unique_key']);//如果用户选择了“记住我”,记录自动登录功能
+
             // $this->clear_login_attempts();//清除失败记录
             // $this->update_last_activity($user['guid']);//更新最后登录时间
         }
 
-
-
-        // $result = FALSE;
-        // $field = array('guid', 'group_id', 'email', 'password', 'unique_key');
-        // $condition = array('email' => $email);
-        // $user = $this->get_a_record(TABLE_USERS, $field, $condition);
-
-        // if($user['password'] != $password)
-        // {
-        //     $msg = '您输入的密码有误。';
-        //     $this->set_a_msg($msg,'error');
-        //     $this->increase_login_attempt();
-        // }
-        // else
-        // {
-        //     $data = array('guid' => $user['guid'], 'email' => $user['email'], 'group_id' => $user['group_id'], 'event_id' => $event_id, 'is_login' => TRUE);
-        //     $this->ci->session->set_userdata($data);//写入sesssion中
-        //     if($remember) $this->create_autologin($data['guid'], $user['unique_key']);//如果用户选择了“记住我”,记录自动登录功能
-        //     $this->clear_login_attempts();//清除失败记录
-        //     $this->update_last_activity($user['guid']);//更新最后登录时间
-        //     $result = TRUE;
-        // }
-        // return $result;
+        return $result;
     }
 
     private function encode_password($raw, $salt)
@@ -95,6 +76,17 @@ class User_lib extends MY_lib
         }
           $user = $this->find_user_by_email($email);
           return empty($user) ? true : false;
+    }
+
+    public function logout()
+    {
+        
+    }
+
+    function logout2222222()
+    {
+        if ($this->ci->input->cookie($this->ci->config->item('autologin_cookie'))) $this->delete_autologin();
+        return $this->ci->session->sess_destroy();
     }
 
 
@@ -305,7 +297,7 @@ class User_lib extends MY_lib
     // 用户退出
     // *****************************************************************************
 
-    function logout()
+    function logout2222222()
     {
         if ($this->ci->input->cookie($this->ci->config->item('autologin_cookie'))) $this->delete_autologin();
         return $this->ci->session->sess_destroy();

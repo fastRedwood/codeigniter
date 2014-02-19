@@ -3,7 +3,8 @@ class Welcome extends MY_Controller
 {
     public function index()
     {
-        $this->assign('test',null);
+
+    	$this->assign(array('user' => $this->current_user, 'ccc' => 'Nebraska'));
         $this->display('alice.html');
     }
 }
