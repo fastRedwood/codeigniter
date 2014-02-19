@@ -81,14 +81,7 @@ class User extends MY_Controller
 		// }
 		// else
 		// {
-		// 	if ( ! empty($event_key))
-		// 	{
-		// 		redirect('/?event_key='.$event_key,'refresh');
-		// 	}
-		// 	else
-		// 	{
 		// 		redirect('/');
-		// 	}
 		// }
 
 		redirect('/');
