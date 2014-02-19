@@ -3,19 +3,44 @@
 	class MY_Model extends CI_Model
 	{   
         //return array
-        function fetch($id, $table) {
+        public function fetch($id, $table) {
             $this->db->where('id', $id);
             $query = $this->db->get($table);
             return ($query->num_rows()) ? $query->row_array() : NULL;
         }
 
         //插入数据，返回新建的该条数据(array) 如果没有自增ID,  返回为0.
-        function insert($table, $data)
+        public function insert($table, $data)
         {
             $this->db->insert($table, $data);
             $id = $this->db->insert_id();
             return $this->fetch($id, $table);
         }
+
+        public function fetch_row($table, $field, $condition)
+        {
+            if(is_array($field)) $field = implode($field, ',');
+            $query = $this->select_rows($table, $field, $condition);
+            return ($query->num_rows()) ? $query->row_array() : NULL;
+        }
+
+        //从数据库中读取一条或多条数据的标准方法
+        private function select_rows($table, $field, $condition, $limit = NULL, $offset = NULL, $orderby = NULL, $sort = NULL, $forcount = FALSE)
+        {
+            if ($field != '*') $this->db->select($field, FALSE);
+            if ($condition != NULL) $this->db->where($condition);
+            if ($orderby != NULL) $this->db->order_by($orderby, $sort);
+            if ($forcount == TRUE) return $this->db->count_all_results($table);
+            else return $this->db->get($table, $limit, $offset);
+        }
+
+
+
+
+
+
+
+
 
 
     	//更新数据，输入数据库名称，更新的数据，条件. 如果更新成功，返回ture,  否则，返回false.
@@ -39,15 +64,7 @@
 			return $this->db->update($table, $data, $condition);
         }
 
-    	//从数据库中读取一条或多条数据的标准方法
-    	function select_rows($table, $field, $condition, $limit = NULL, $offset = NULL, $orderby = NULL, $sort = NULL, $forcount = FALSE)
-    	{
-    		$this->db->select($field, FALSE);
-    		if ($condition != NULL) $this->db->where($condition);
-    		if ($orderby != NULL) $this->db->order_by($orderby, $sort);
-    		if ($forcount == TRUE) return $this->db->count_all_results($table);
-    		else return $this->db->get($table, $limit, $offset);
-    	}
+    	
 
     	//将几个数据库连接起来做联合查询
     	function select_rows_with_join($table, $fields=NULL, $join, $condition, $limit, $offset, $orderby, $sort, $forcount)

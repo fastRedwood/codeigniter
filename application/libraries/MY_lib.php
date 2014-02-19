@@ -26,10 +26,14 @@
 			// $this->_method			= $this->get_method_name();
 		}
 
-		function create_a_record($table, $data)
-		{
-			return $this->ci->base_dao->insert_a_row($table, $data);
-		}
+		// ***************************************************
+		// 提示信息操作
+		// ***************************************************
+
+		//将一个提示信息赋值到$_msg中去, 信息类型包括“通知(info), 错误(error), 警告(warning)”
+		protected function set_flash_message($type, $message) {
+	        $this->ci->session->set_flashdata($type, $message);
+	    }
 
 		
 	}

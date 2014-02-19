@@ -1,4 +1,4 @@
-<!-- {include file='web/macro.html.tpl'} -->
+
 <!DOCTYPE html>
 <html>
 <head>

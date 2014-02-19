@@ -1,4 +1,5 @@
 {* define the macro function *}
+
 {function name=menu level=0}
   <ul class="level{$level}">
   {foreach $data as $entry}
@@ -11,6 +12,7 @@
   {/foreach}
   </ul>
 {/function}
+
 
 <!-- 分页 -->
 {function name=paginator}

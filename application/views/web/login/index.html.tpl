@@ -4,6 +4,11 @@
 {{block name="content"}}
 
 <div class="inner">
+	<?php if($this->session->flashdata('error')) : ?>
+		<div class="<?=$this->session->flashdata('message_type')?>">
+		<h3><span>&nbsp;</span><?=$this->session->flashdata('message')?></h3>
+		</div>
+	<?php endif; ?>
 	<h2 class="title">登 录</h2>
 		<form action="{{site_url url='user/login'}}" method="POST">
 			<div class="message">

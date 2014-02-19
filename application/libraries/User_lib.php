@@ -10,7 +10,7 @@ class User_lib extends MY_lib
         $this->ci = & get_instance();
     }
 
-    function new_user($registration)
+    public function new_user($registration)
     {
 
         $user = array();
@@ -19,22 +19,94 @@ class User_lib extends MY_lib
         $user['createdIp'] = $this->ci->input->ip_address();;
         $user['createdTime'] = time();
         $user['salt'] = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
-        $user['password'] = $this->encodePassword($registration['password'], $user['salt']);
-
+        $user['password'] = $this->encode_password($registration['password'], $user['salt']);
 
         // $core_data 	= array('title' => $name, 'main' => NULL);
-        // $guid = $this->create_an_entity($subtype, 0, 1, $time, $core_data);
         $user = $this->add_user_dao($user);
         // $this->insert_a_userdata_record($guid, $source, $time, $data);
-
         // $this->insert_a_userdata_record($guid, $this->ci->config->item('authorization'), $time, $data);
         return $user;
     }
 
-    private function encodePassword($raw, $salt)
+
+    public function login($vistor)
+    {
+
+        if ($this->is_email_available($vistor['email'])) 
+        {
+            // throw new Exception('Email不存在');
+            return false;
+        }
+
+        $user = $this->find_user_by_email($vistor['email']);
+        $vistor['password'] = $this->encode_password($vistor['password'], $user['salt']);
+
+        if($user['password'] != $vistor['password'])
+        {
+            $this->set_flash_message('error', "您输入的密码有误。");
+            redirect("user/login");
+
+            // Get Flash data on view 
+            $this->session->flashdata('error');
+            // $this->increase_login_attempt();
+        }
+
+
+        // $result = FALSE;
+        // $field = array('guid', 'group_id', 'email', 'password', 'unique_key');
+        // $condition = array('email' => $email);
+        // $user = $this->get_a_record(TABLE_USERS, $field, $condition);
+
+        // if($user['password'] != $password)
+        // {
+        //     $msg = '您输入的密码有误。';
+        //     $this->set_a_msg($msg,'error');
+        //     $this->increase_login_attempt();
+        // }
+        // else
+        // {
+        //     $data = array('guid' => $user['guid'], 'email' => $user['email'], 'group_id' => $user['group_id'], 'event_id' => $event_id, 'is_login' => TRUE);
+        //     $this->ci->session->set_userdata($data);//写入sesssion中
+        //     if($remember) $this->create_autologin($data['guid'], $user['unique_key']);//如果用户选择了“记住我”,记录自动登录功能
+        //     $this->clear_login_attempts();//清除失败记录
+        //     $this->update_last_activity($user['guid']);//更新最后登录时间
+        //     $result = TRUE;
+        // }
+        // return $result;
+    }
+
+    private function encode_password($raw, $salt)
     {
         return base_convert(sha1($raw).$salt, 16, 36);
     }
+
+    private function is_email_available($email) {
+        if (empty($email)) {
+            return false;
+        }
+          $user = $this->find_user_by_email($email);
+          return empty($user) ? true : false;
+    }
+
+
+
+
+    // User DAO 
+    public function add_user_dao($user)
+    {
+        return $this->ci->base_dao->insert(TABLE_USER, $user);
+    }
+
+    public function find_user_by_email($email)
+    {
+        return $this->ci->base_dao->fetch_row(TABLE_USER, '*', array('email' => $email));
+    }
+
+
+
+
+
+    
 
     function update_a_user($guid, $name, $source, $data)
     {
@@ -44,11 +116,6 @@ class User_lib extends MY_lib
         else $this->update_a_userdata_record($guid, $source, $time, $data);
         $this->ci->db->trans_complete();
         return $this->db->trans_status();
-    }
-
-    public function add_user_dao($user)
-    {
-        return $this->ci->base_dao->insert(TABLE_USER, $user);
     }
 
     function insert_a_userdata_record($guid, $source, $time, $data)
