@@ -24,7 +24,6 @@ class User extends MY_Controller
 			//@todo 后台验证email格式是否正确
 
 			//@todo 后台验证email是否存在
-
 			$user = $this->user_lib->new_user($data);
 
 		}
@@ -40,6 +39,9 @@ class User extends MY_Controller
 
 	function login()
 	{	
+		
+		// 调试
+    	$this->output->enable_profiler(TRUE);
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_check_email_for_login');
 		$this->form_validation->set_rules('password', '密码', 'required');
 
@@ -53,14 +55,17 @@ class User extends MY_Controller
 		{
 			if($this->user_lib->login($vistor))
 			{
-				redirect('user/login', 'refresh');
+				// redirect('user/login', 'refresh');
+				return false;
 			}
 			else
 			{
 				// $data['msg'] = $this->user_lib->get_a_msg();
 			}
+			var_dump("endendend");
 		}
-		var_dump("endendend");
+
+		var_dump($this->is_login);
 
 
 		// $condition	= "(entities.visibility = 1) AND ";

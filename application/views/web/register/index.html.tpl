@@ -30,10 +30,9 @@
 						<span>密码</span>
 						<input type="password" name="password">
 					</div>
-					<div class="input">
+			<!-- 		<div class="input">
 						<span>在输入一次密码</span>
-						<input type="password" name="password">
-					</div>
+					</div> -->
 					<div class="submit">
 						<input type="submit" name="submit" value="注 册">
 					</div>

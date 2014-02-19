@@ -31,7 +31,6 @@ class User_lib extends MY_lib
 
     public function login($vistor)
     {
-
         if ($this->is_email_available($vistor['email'])) 
         {
             // throw new Exception('Email不存在');
@@ -40,16 +39,26 @@ class User_lib extends MY_lib
 
         $user = $this->find_user_by_email($vistor['email']);
         $vistor['password'] = $this->encode_password($vistor['password'], $user['salt']);
-
         if($user['password'] != $vistor['password'])
         {
-            $this->set_flash_message('error', "您输入的密码有误。");
-            redirect("user/login");
+            // $this->set_flash_message('error', "您输入的密码有误。");
+            // redirect("user/login");
+            var_dump("您输入的密码有误");
 
             // Get Flash data on view 
-            $this->session->flashdata('error');
+            // $this->session->flashdata('error');
+
             // $this->increase_login_attempt();
+        }else{
+
+            $data = array('user' => $user, 'is_login' => 1);
+            $this->ci->session->set_userdata($data);//写入sesssion中
+            
+            // if($remember) $this->create_autologin($data['guid'], $user['unique_key']);//如果用户选择了“记住我”,记录自动登录功能
+            // $this->clear_login_attempts();//清除失败记录
+            // $this->update_last_activity($user['guid']);//更新最后登录时间
         }
+
 
 
         // $result = FALSE;
@@ -77,7 +86,7 @@ class User_lib extends MY_lib
 
     private function encode_password($raw, $salt)
     {
-        return base_convert(sha1($raw).$salt, 16, 36);
+        return md5(sha1($raw).$salt);
     }
 
     private function is_email_available($email) {

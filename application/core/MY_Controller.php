@@ -1,12 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct access allowed.');
 class MY_Controller extends CI_Controller { 
-	var $_guid;
-	var $_group_id;
-	var $_login_status;
-	var $_event_id;
-	
-	var $_class;
-	var $_method;
+
+	var $current_user;
+	var $is_login;
 
     public function __construct() {
         parent::__construct();
@@ -15,13 +11,14 @@ class MY_Controller extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->helper('url');
 		
-		$this->_login_status	= $this->my_lib->_login_status;
-		$this->_group_id		= $this->my_lib->_group_id;
-		$this->_guid			= $this->my_lib->_guid;
-		$this->_event_id		= $this->my_lib->_event_id;
+		$this->current_user			= $this->my_lib->current_user;
+		$this->is_login			= $this->my_lib->is_login;
+		// $this->_login_status	= $this->my_lib->_login_status;
+		// $this->_group_id		= $this->my_lib->_group_id;
+		// $this->_event_id		= $this->my_lib->_event_id;
 		
-		$this->_class			= $this->my_lib->_class;
-		$this->_method			= $this->my_lib->_method;
+		// $this->_class			= $this->my_lib->_class;
+		// $this->_method			= $this->my_lib->_method;
 		
 		// $this->my_lib->autologin();
     }
