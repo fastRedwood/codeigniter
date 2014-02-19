@@ -3,7 +3,8 @@ seajs.config({
 	alias:{
 		'jquery':'jquery/jquery/1.10.1/jquery.js',
 		'$': 'jquery/jquery/1.10.1/jquery.js',
-		'$-debug': 'jquery/jquery/1.10.1/jquery-debug.js'
+		'$-debug': 'jquery/jquery/1.10.1/jquery-debug.js',
+		'bootstrap': 'gallery2/bootstrap/3.1.1/bootstrap',
 	},
 	// 预加载项
 	preload: [

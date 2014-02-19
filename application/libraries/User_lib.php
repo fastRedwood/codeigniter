@@ -102,6 +102,11 @@ class User_lib extends MY_lib
         return $this->ci->base_dao->fetch_row(TABLE_USER, '*', array('email' => $email));
     }
 
+    public function find_users()
+    {
+        return $this->ci->base_dao->fetch_row(TABLE_USER, '*', array());
+    }
+
 
 
 
