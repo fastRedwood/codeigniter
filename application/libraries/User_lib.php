@@ -80,7 +80,7 @@ class User_lib extends MY_lib
 
     public function logout()
     {
-        
+        return $this->ci->session->sess_destroy();
     }
 
     // function logout2222222()
