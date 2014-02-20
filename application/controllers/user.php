@@ -23,7 +23,7 @@ class User extends MY_Controller
 		$this->form_validation->set_message('required', '%s 不能为空');
 		$this->form_validation->set_message('valid_email', '邮箱格式有误.');
 		$this->form_validation->set_message('matches', '两次密码输入不匹配.');
-		$this->form_validation->set_message('callback_is_email_available', '该邮箱已被注册');
+		// $this->form_validation->set_message('is_email_available', '该邮箱已被注册');
 
 		if ( $this->form_validation->run() )
 		{
