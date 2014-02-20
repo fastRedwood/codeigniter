@@ -58,7 +58,8 @@
 		//从sesssion中获取当前用户是否是admin权限，admin return 1, others return 0 如果用户尚未登录，return = 0
 		function get_session_is_admin()
 		{
-			return ($this->ci->session->userdata('group_id')) ? $group_id = $this->ci->session->userdata('group_id') : 0;
+			$user = $this->ci->session->userdata('user');
+			return $user['group_id'] ? 1 : 0;
 		}
 
 
