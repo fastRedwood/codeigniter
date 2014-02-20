@@ -17,22 +17,27 @@ class User extends MY_Controller
     	// 调试
     	// $this->output->enable_profiler(TRUE);
 
-    	//提交表单
-    	$data = $this->input->post(NULL, TRUE); 
-    	if($data)
+		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_is_email_available');
+		$this->form_validation->set_rules('password', '密码', 'required|matches[passconf]|min_length[6]');
+		$this->form_validation->set_rules('passconf', '重复输入一次密码', 'required');
+		$this->form_validation->set_message('required', '%s 不能为空');
+		$this->form_validation->set_message('valid_email', '邮箱格式有误.');
+		$this->form_validation->set_message('matches', '两次密码输入不匹配.');
+		$this->form_validation->set_message('callback_is_email_available', '该邮箱已被注册');
+
+		if ( $this->form_validation->run() )
 		{
-			//@todo 后台验证email格式是否正确
+	    	//提交表单
+	    	$data = $this->input->post(NULL, TRUE); 
+	    	if($data)
+			{
+				//@todo 后台验证email格式是否正确
 
-			//@todo 后台验证email是否存在
-			$user = $this->user_lib->new_user($data);
+				//@todo 后台验证email是否存在
+				$user = $this->user_lib->new_user($data);
 
+			}
 		}
-		// // 传递联合数组
-		// $this->assign(array('bbb' => $test, 'ccc' => 'Nebraska'));
-
-		// // 传递数组
-		// $myArray = array('no' => 10, 'label' => 'Peanuts');
-		// $this->assign('foo',$myArray);
 
         $this->display('web/register/index.html.tpl');
     }
@@ -88,17 +93,12 @@ class User extends MY_Controller
 		redirect('/');
 	}
 
-	//检查注册邮箱是否已经注册。如果没有注册过，返回false,　并输出错误信息。
-	// function check_email_for_login($email)
-	// {
-	// 	$result = TRUE;
-	// 	if(!$this->user_lib->check_a_record('users',array('email'=>$email)))
-	// 	{
-	// 		$this->form_validation->set_message('check_email_for_login', '您输入的%s在系统中不存在。');
-	// 		$result = FALSE;
-	// 	}
-	// 	return $result;
-	// }
+	//检查注册邮箱是否已经注册。如果注册过，返回false
+	public function is_email_available($email)
+	{
+		var_dump($this->user_lib->is_email_available($email));
+		return $this->user_lib->is_email_available($email);
+	}
 
 	// function check_allow_user_login($email)
 	// {

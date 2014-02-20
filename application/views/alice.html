@@ -26,6 +26,7 @@
                 <h1>Hello ! {{$user.email|default:'你还未登录'}}</h1>
                 {{if !$user.email}}
                     <a href="{{site_url url='user/login'}}">现在登录</a>
+                    <a href="{{site_url url='user/register'}}">注 册</a>
                 {{/if}}
             </div>
         </div>

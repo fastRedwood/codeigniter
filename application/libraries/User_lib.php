@@ -70,7 +70,7 @@ class User_lib extends MY_lib
         return md5(sha1($raw).$salt);
     }
 
-    private function is_email_available($email) {
+    public function is_email_available($email) {
         if (empty($email)) {
             return false;
         }
