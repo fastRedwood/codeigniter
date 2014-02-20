@@ -38,10 +38,12 @@ class User extends MY_Controller
     }
 
 	function login()
+
 	{	
 		
 		// 调试
     	// $this->output->enable_profiler(TRUE);
+
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_check_email_for_login');
 		$this->form_validation->set_rules('password', '密码', 'required');
 

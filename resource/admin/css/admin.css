@@ -1,0 +1,12 @@
+.row{
+	margin-top: 90px;
+}
+.maincontent {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 65px;
+	border: 1px solid #e8e8e8;
+	-webkit-box-shadow: 0 0 20px rgba(50,50,50,.1);
+	-moz-box-shadow: 0 0 20px rgba(50,50,50,.1);
+	box-shadow: 0 0 20px rgba(50,50,50,.1);
+}
