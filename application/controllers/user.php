@@ -13,7 +13,7 @@ class User extends MY_Controller
 	}
 
 	public function register()
-    {
+	{
     	// 调试
     	// $this->output->enable_profiler(TRUE);
 
@@ -27,23 +27,21 @@ class User extends MY_Controller
 
 		if ( $this->form_validation->run() )
 		{
-	    	//提交表单
-	    	$data = $this->input->post(NULL, TRUE); 
-	    	if($data)
+	    		//提交表单
+	    		$data = $this->input->post(NULL, TRUE); 
+	    		if($data)
 			{
 				//@todo 后台验证email格式是否正确
-
 				//@todo 后台验证email是否存在
 				$user = $this->user_lib->new_user($data);
 
 			}
 		}
 
-        $this->display('web/register/index.html.tpl');
-    }
+	        	$this->display('web/register/index.html.tpl');
+    	}
 
 	function login()
-
 	{	
 		
 		// 调试
