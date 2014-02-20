@@ -41,7 +41,7 @@ class User extends MY_Controller
 	{	
 		
 		// 调试
-    	$this->output->enable_profiler(TRUE);
+    	// $this->output->enable_profiler(TRUE);
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_check_email_for_login');
 		$this->form_validation->set_rules('password', '密码', 'required');
 
@@ -62,7 +62,6 @@ class User extends MY_Controller
 			{
 				// $data['msg'] = $this->user_lib->get_a_msg();
 			}
-			var_dump("endendend");
 		}
 
 		$this->assign(array(

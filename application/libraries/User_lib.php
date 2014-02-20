@@ -80,6 +80,7 @@ class User_lib extends MY_lib
 
     public function logout()
     {
+        //@todo 记住密码
         return $this->ci->session->sess_destroy();
     }
 

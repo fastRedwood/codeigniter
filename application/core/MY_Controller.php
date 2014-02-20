@@ -3,6 +3,7 @@ class MY_Controller extends CI_Controller {
 
 	var $current_user;
 	var $is_login;
+	var $is_admin;
 
     public function __construct() {
         parent::__construct();
@@ -11,12 +12,10 @@ class MY_Controller extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->helper('url');
 		
-		$this->current_user			= $this->my_lib->current_user;
+		$this->current_user		= $this->my_lib->current_user;
 		$this->is_login			= $this->my_lib->is_login;
-		// $this->_login_status	= $this->my_lib->_login_status;
-		// $this->_group_id		= $this->my_lib->_group_id;
-		// $this->_event_id		= $this->my_lib->_event_id;
-		
+		$this->is_admin			= $this->my_lib->is_admin;
+
 		// $this->_class			= $this->my_lib->_class;
 		// $this->_method			= $this->my_lib->_method;
 		
@@ -43,4 +42,10 @@ class MY_Controller extends CI_Controller {
     public function display($html) {
         $this->ci_smarty->display($html);
     }
+
+    //登录控制
+    public function access_control()
+	{
+		if(!$this->is_login) redirect('/user/login','refresh');
+	}
 } 

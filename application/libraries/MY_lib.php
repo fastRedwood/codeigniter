@@ -3,9 +3,9 @@
 
 	class MY_lib
 	{
-		var $_guid;
-		var $_group_id;
-		var $_event_id;
+		// var $_guid;
+		// var $_group_id;
+		// var $_event_id;
 
 		var $_msg;
 		var $_class;
@@ -13,6 +13,7 @@
 
 		var $current_user;
 		var $is_login;
+		var $is_admin;
 
 		function __construct()
 		{
@@ -21,8 +22,7 @@
 
 			$this->current_user		= $this->get_session_current_user();
 			$this->is_login	    = $this->get_session_login_status();
-			// $this->_group_id		= $this->get_session_group_id();
-			// $this->_event_id		= $this->get_event_id();
+			$this->is_admin		= $this->get_session_is_admin();
 
 			// $this->_class			= $this->get_class_name();
 			// $this->_method			= $this->get_method_name();
@@ -55,16 +55,24 @@
 		}
 
 
-		//从sesssion中获取当前用户group_id，如果用户尚未登录，用户的group_id = 0
-		function get_session_group_id()
+		//从sesssion中获取当前用户是否是admin权限，admin return 1, others return 0 如果用户尚未登录，return = 0
+		function get_session_is_admin()
 		{
 			return ($this->ci->session->userdata('group_id')) ? $group_id = $this->ci->session->userdata('group_id') : 0;
 		}
 
-		function get_event_id()
-		{
-			return ($this->ci->session->userdata('event_id')) ? $event_id = $this->ci->session->userdata('event_id') : 0;
-		}
+
+
+		// //从sesssion中获取当前用户group_id，如果用户尚未登录，用户的group_id = 0
+		// function get_session_group_id()
+		// {
+		// 	return ($this->ci->session->userdata('group_id')) ? $group_id = $this->ci->session->userdata('group_id') : 0;
+		// }
+
+		// function get_event_id()
+		// {
+		// 	return ($this->ci->session->userdata('event_id')) ? $event_id = $this->ci->session->userdata('event_id') : 0;
+		// }
 
 		//get class name
 		function get_class_name()
