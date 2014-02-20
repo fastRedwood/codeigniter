@@ -22,7 +22,6 @@
     <div class="wrapper">
         <div class="ui-grid-row">
             <div class="ui-grid-25">
-
                 <h1>Hello ! {{$user.email|default:'你还未登录'}}</h1>
                 {{if !$user.email}}
                     <a href="{{site_url url='user/login'}}">现在登录</a>
@@ -51,9 +50,11 @@
                         </ul>
                         </li>
                         {{if isset($user.email) }}
+                            {{if $is_admin }}
                             <li class="ui-nav-item">
                                 <a href="{{site_url url='admin/user'}}">后台管理</a>
                             </li>
+                            {{/if}}
                             
                             <li class="ui-nav-item">
                                 <a href="{{site_url url='user/logout'}}">退出登录</a>
