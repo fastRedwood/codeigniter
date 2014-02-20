@@ -23,6 +23,8 @@ class User_lib extends MY_lib
 
         // $core_data 	= array('title' => $name, 'main' => NULL);
         $user = $this->add_user_dao($user);
+        $data = array('user' => $user, 'is_login' => 1);
+        $this->ci->session->set_userdata($data);
         // $this->insert_a_userdata_record($guid, $source, $time, $data);
         // $this->insert_a_userdata_record($guid, $this->ci->config->item('authorization'), $time, $data);
         return $user;
@@ -43,6 +45,7 @@ class User_lib extends MY_lib
         $vistor['password'] = $this->encode_password($vistor['password'], $user['salt']);
         if($user['password'] != $vistor['password'])
         {
+            //@todo
             // $this->set_flash_message('error', "您输入的密码有误。");
             // redirect("user/login");
             var_dump("您输入的密码有误");
@@ -70,7 +73,7 @@ class User_lib extends MY_lib
         return md5(sha1($raw).$salt);
     }
 
-    private function is_email_available($email) {
+    public function is_email_available($email) {
         if (empty($email)) {
             return false;
         }
@@ -80,6 +83,7 @@ class User_lib extends MY_lib
 
     public function logout()
     {
+        //@todo 记住密码
         return $this->ci->session->sess_destroy();
     }
 

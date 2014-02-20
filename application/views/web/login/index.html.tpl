@@ -12,9 +12,6 @@
 	<h2 class="title">登 录</h2>
 		<form action="{{site_url url='user/login'}}" method="POST">
 			<div class="message">
-				{{if $error != ''}}<p class="error">{{$error}}</p>{{/if}}
-				{{if $message != ''}}<p class="message">{{$message}}</p>{{/if}}
-
 				{{validation_errors()}}
 			</div>
 			
