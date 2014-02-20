@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://www.codeigniterdev.com/';
+$config['base_url']	= 'http://www.cicms.com/';
 
 /*
 |--------------------------------------------------------------------------
