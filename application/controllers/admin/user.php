@@ -15,11 +15,7 @@ class User extends MY_Controller
 
 	public function index()
 	{
-		// $this->output->enable_profiler(TRUE);
 		$users = $this->user_lib->find_users(10);
-		// $fields = array('username' => 'test');
-		// $where = 'id = 1';
-		// $this->user_lib->update_user($fields, $where);
 		$this->assign('vistor',$this->current_user);
 		$this->assign('users',$users);
 		$this->display('admin/user/user.html.tpl');
