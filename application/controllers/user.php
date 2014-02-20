@@ -18,28 +18,26 @@ class User extends MY_Controller
     	// $this->output->enable_profiler(TRUE);
 
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_is_email_available');
-		$this->form_validation->set_rules('password', '密码', 'required|matches[passconf]|min_length[6]');
-		$this->form_validation->set_rules('passconf', '重复输入一次密码', 'required');
+		$this->form_validation->set_rules('password', '密码', 'required|min_length[6]');
+		$this->form_validation->set_rules('passconf', '重复输入一次密码', 'required|matches[password]');
 		$this->form_validation->set_message('required', '%s 不能为空');
 		$this->form_validation->set_message('valid_email', '邮箱格式有误.');
 		$this->form_validation->set_message('matches', '两次密码输入不匹配.');
-		$this->form_validation->set_message('callback_is_email_available', '该邮箱已被注册');
 
 		if ( $this->form_validation->run() )
 		{
-	    		//提交表单
-	    		$data = $this->input->post(NULL, TRUE); 
-	    		if($data)
-			{
-				//@todo 后台验证email格式是否正确
-				//@todo 后台验证email是否存在
-				$user = $this->user_lib->new_user($data);
+	    	//提交表单
+	    	$data = $this->input->post(NULL, TRUE); 
+	    	if($data) $user = $this->user_lib->new_user($data);
+			redirect('/', 'refresh');
 
-			}
+
 		}
 
-	        	$this->display('web/register/index.html.tpl');
-    	}
+        $this->display('web/register/index.html.tpl');
+
+    }
+
 
 	function login()
 	{	
@@ -60,7 +58,7 @@ class User extends MY_Controller
 		{
 			if($this->user_lib->login($vistor))
 			{
-				redirect('welcome', 'refresh');
+				redirect('/', 'refresh');
 		
 			}
 			else
@@ -94,8 +92,13 @@ class User extends MY_Controller
 	//检查注册邮箱是否已经注册。如果注册过，返回false
 	public function is_email_available($email)
 	{
-		var_dump($this->user_lib->is_email_available($email));
-		return $this->user_lib->is_email_available($email);
+		if(!$this->user_lib->is_email_available($email))
+		{
+			$this->form_validation->set_message('is_email_available', '该邮箱已被注册');
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 	// function check_allow_user_login($email)
