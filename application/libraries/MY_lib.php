@@ -59,7 +59,7 @@
 		function get_session_is_admin()
 		{
 			$user = $this->ci->session->userdata('user');
-			return $user['group_id'] ? 1 : 0;
+			return $user['group_id']==1 ? 1 : 0;
 		}
 
 
