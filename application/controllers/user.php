@@ -29,9 +29,12 @@ class User extends MY_Controller
 	    	//提交表单
 	    	$data = $this->input->post(NULL, TRUE); 
 	    	if($data) $user = $this->user_lib->new_user($data);
+			redirect('/', 'refresh');
+
 		}
 
         $this->display('web/register/index.html.tpl');
+
     }
 
 	function login()
@@ -54,7 +57,7 @@ class User extends MY_Controller
 		{
 			if($this->user_lib->login($vistor))
 			{
-				redirect('welcome', 'refresh');
+				redirect('/', 'refresh');
 		
 			}
 			else
