@@ -17,11 +17,29 @@
             return $this->fetch($id, $table);
         }
 
+        public function delete($table, $id)
+        {
+            $query = $this->db->delete($table, array('id' => $id));
+            return ($query->num_rows()) ? $query->row_array() : NULL;
+        }
+
+        public function update($table, $fields, $where)
+        {
+            $sql = $this->db->update_string($table, $fields, $where);
+            return $this->db->query($sql);
+        }
+
         public function fetch_row($table, $field, $condition)
         {
             if(is_array($field)) $field = implode($field, ',');
             $query = $this->select_rows($table, $field, $condition);
             return ($query->num_rows()) ? $query->row_array() : NULL;
+        }
+
+        public function fetch_all($table, $limit, $start = NULL, $orderby = NULL)
+        {
+            $query = $this->select_rows($table, '*', array(), $limit, $start, $orderby);
+            return ($query->num_rows()) ? $query->result_array() : NULL;
         }
 
         //从数据库中读取一条或多条数据的标准方法

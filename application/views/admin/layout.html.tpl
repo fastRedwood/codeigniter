@@ -5,7 +5,6 @@
 	<link rel="icon" href="favicon.ico" type="image/ico">
 	<meta charset="utf-8">
 	<title>测试Smarty继承页面</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="/resource/uilibs/jquery/jquery/1.10.1/jquery.js" type="text/javascript"></script>
   <link rel="stylesheet" href="/resource/uilibs/gallery2/bootstrap/3.1.1/css/bootstrap.css">
 	<link rel="stylesheet" href="/resource/admin/css/admin.css">
@@ -27,9 +26,9 @@
           <li class="active"><a href="">用户管理</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href=""><i class="glyphicon glyphicon-home"></i> 回首页</a></li>
-          <li><a href=""><i class="glyphicon glyphicon-user"></i> {{$user.name}}</a></li>
-          <li><a href=""><i class="glyphicon glyphicon-off"></i> 退出</a></li>
+          <li><a href="{{site_url url='/'}}"><i class="glyphicon glyphicon-home"></i> 回首页</a></li>
+          <li><a href=""><i class="glyphicon glyphicon-user"></i> {{$vistor.email}}</a></li>
+          <li><a href="{{site_url url='user/logout'}}"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
         </ul>
 
       </div>
@@ -38,6 +37,12 @@
   <div class="container">
     <div class="row">{{block name="content"}}{{/block}}</div>
   </div>
+  <!-- <div id="modal" class="modal fade" style="width:1200px;margin: -270px 0 0 -400px;"></div> -->
+
+  <div id="modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    hjkhjkhkhkj
+  </div>
+
 	{{block name="script"}}{{/block}}
 	<script src="/resource/uilibs/seajs/seajs/2.1.1/sea.js"></script>
 	<script src="/resource/uilibs/seajs-config.js" language="javascript">
