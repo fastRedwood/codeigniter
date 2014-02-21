@@ -5,7 +5,7 @@
       <h4 class="modal-title">{{block name="title"}}{{/block}}</h4>
     </div>
     <div class="modal-body">{{block name="body"}}{{/block}}</div>
-    {{if not hide_footer|default(false)}}
+    {{if not hide_footer}}
       <div class="modal-footer">{{block name="footer"}}{{/block}}</div>
     {{/if}}
   </div>
