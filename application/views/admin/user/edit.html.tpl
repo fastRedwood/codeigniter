@@ -1,8 +1,7 @@
-<div class="modal-dialog" style="width:400px;">
-<div class="modal-content">
-    <div class="modal-header">
-    <h4 class="modal-title" id="myModalLabel">添加信息</h4><span id="error" class="label label-danger"></span>
-    </div>
+{{extends file="admin/bootstrap-modal-layout.html.tpl"}}
+
+
+{{block name="body"}}
     <div class="modal-body">
         <table cellpadding="3">
             <tr><td>
@@ -67,13 +66,4 @@
     </div>
                 </td></tr>
         </table>
-        
-        
-        
-    </div>
-    <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-    <button type="button" class="btn btn-primary" onclick="AddInfo()">提交数据</button>
-    </div>
-</div>
-</div>
+{{/block}}

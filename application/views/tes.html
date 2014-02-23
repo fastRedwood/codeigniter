@@ -21,7 +21,10 @@
 	<script src="/resource/uilibs/seajs-config.js" language="javascript">
 	</script>
 	<script>
-		seajs.use('/resource/admin/js/admin-app.js');
+		seajs.use('/resource/web/js/app.js',function(app){
+			{{block name="script"}}
+			{{/block}}
+		});
 	</script>
 	{{block name="script"}}
 	{{/block}}
