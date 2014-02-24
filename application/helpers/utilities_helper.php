@@ -1,4 +1,5 @@
 <?php
+
 	function rand_str($length=32,$chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890')
 	{
 		$chars_length = (strlen($chars)-1);//Length of character list

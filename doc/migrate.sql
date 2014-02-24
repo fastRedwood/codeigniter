@@ -39,3 +39,17 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
   PRIMARY KEY (`session_id`),
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE IF NOT EXISTS `user_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `token` varchar(64) NOT NULL,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `type` varchar(255) NOT NULL,
+  `data` text NOT NULL,
+  `expired_time` int(10) unsigned NOT NULL,
+  `created_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `token` (`token`(6))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

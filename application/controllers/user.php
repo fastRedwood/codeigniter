@@ -8,6 +8,7 @@ class User extends MY_Controller
 		$this->load->library('User_lib');
 		$this->load->library('form_validation');
 		$this->load->helper('form');
+
 		// 设置 报错误的样式
 		// $this->form_validation->set_error_delimiters('<p class="error">ddddd', '</p>');
 	}
@@ -15,7 +16,7 @@ class User extends MY_Controller
 	public function register()
     {
     	// 调试
-    	// $this->output->enable_profiler(TRUE);
+    	$this->output->enable_profiler(TRUE);
 
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_is_email_available');
 		$this->form_validation->set_rules('password', '密码', 'required|min_length[6]');
@@ -28,16 +29,45 @@ class User extends MY_Controller
 		{
 	    	//提交表单
 	    	$data = $this->input->post(NULL, TRUE); 
-	    	if($data) $user = $this->user_lib->new_user($data);
-			redirect('/', 'refresh');
+	    	if($data)
+	    	{
+	    		$user = $this->user_lib->new_user($data);
+	    		$result = $this->user_lib->send_verify_email($user);
 
+				// $receiver = '769567736@qq.com';
+				// $title = '这是右键title';
+				// $body = '这是邮件内容';
+		  //   	$this->send_email($receiver, $title, $body);
+		    	var_dump("expression232323");
+				// redirect('/', 'refresh');
+	    	} 
 		}
 
         $this->display('web/register/index.html.tpl');
 
     }
 
-	function login()
+    // private function send_verify_email($user) {
+    //     $parameters = $this->config->item('parameters');
+    //     $token = $this->make_token('email-verify', $user['id'], strtotime('+1 day'));
+   
+    //     $emailTitle = "验证".$user['email']."在".$parameters['site_name']."的电子邮箱";
+    //     $emailBody = $this->renderView('RedwoodWebBundle:Register:verify-email.html.twig', array(
+    //         'user' => $user,
+    //         'token' => $token,
+    //     ));
+
+    //     $this->send_email($user['email'], $emailTitle, $emailBody);
+
+    //     $receiver = '769567736@qq.com';
+    //     $title = '这是右键title';
+    //     $body = '这是邮件内容';
+    //     $this->send_email($receiver, $title, $body);
+    // }
+
+   
+
+	public function login()
 
 	{	
 		
@@ -73,7 +103,7 @@ class User extends MY_Controller
 		$this->display('web/login/index.html.tpl');
 	}
 
-	function logout()
+	public function logout()
 	{
 		$this->user_lib->logout();
 		// if($this->_group_id == S_ADMIN_GROUP)

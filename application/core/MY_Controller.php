@@ -8,9 +8,10 @@ class MY_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('MY_lib');
-		$this->load->library('Form_validation');
+		$this->load->library('form_validation');
 		$this->load->helper('form');
 		$this->load->helper('url');
+		$this->load->library('email');
 		
 		$this->current_user		= $this->my_lib->current_user;
 		$this->is_login			= $this->my_lib->is_login;
@@ -48,4 +49,28 @@ class MY_Controller extends CI_Controller {
 	{
 		if(!$this->is_login) redirect('/user/login','refresh');
 	}
+
+	protected function send_email($receiver, $title, $body, $format = 'text')
+	{
+		$parameters = $this->config->item('parameters');
+		$sender    = $this->config->item('smtp_user');
+
+		try{
+			$this->email->mailtype = $format;
+			$this->email->from ($sender, $parameters['site_name']);
+			$this->email->to ($receiver);
+			$this->email->subject ($title);
+			$this->email->message ($body);
+			$this->email->send();
+
+			//调试邮件发送
+			// echo $this->email->print_debugger();
+			// exit;
+
+		}catch (Exception $e) {
+            // @todo log it.
+        }
+        return TRUE;
+	}
+
 } 
