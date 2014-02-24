@@ -16,7 +16,7 @@ class User extends MY_Controller
 	public function register()
     {
     	// 调试
-    	$this->output->enable_profiler(TRUE);
+    	// $this->output->enable_profiler(TRUE);
 
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_is_email_available');
 		$this->form_validation->set_rules('password', '密码', 'required|min_length[6]');
@@ -31,7 +31,7 @@ class User extends MY_Controller
 	    	$data = $this->input->post(NULL, TRUE); 
 	    	if($data)
 	    	{
-	    		$user = $this->user_lib->new_user($data);
+	    		$user 	= $this->user_lib->new_user($data);
 	    		$result = $this->user_lib->send_verify_email($user);
 
 				// $receiver = '769567736@qq.com';
