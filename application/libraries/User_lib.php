@@ -24,7 +24,8 @@ class User_lib extends MY_lib
         // $core_data 	= array('title' => $name, 'main' => NULL);
         $user = $this->add_user_dao($user);
         $data = array('user' => $user, 'is_login' => 1);
-        $this->ci->session->set_userdata($data);
+        $this->ci->session->set_userdata($data);//写入sesssion中
+
         // $this->insert_a_userdata_record($guid, $source, $time, $data);
         // $this->insert_a_userdata_record($guid, $this->ci->config->item('authorization'), $time, $data);
         return $user;
@@ -93,10 +94,48 @@ class User_lib extends MY_lib
     //     return $this->ci->session->sess_destroy();
     // }
 
+    public function send_verify_email($user) {
+        $parameters = $this->config->item('parameters');
+        $token = $this->make_token('email-verify', $user['id'], strtotime('+1 day'));
+   
+        $emailTitle = "验证".$user['email']."在".$parameters['site_name']."的电子邮箱";
+        $emailBody = $this->ci_smarty->fetch('web/register/email-verify.html.tpl', array(
+                        'user' => $user, 
+                        'token' => $token, 
+                    ));
+        var_dump($emailBody);
+    
+        $this->send_email($user['email'], $emailTitle, $emailBody);
+
+        // $receiver = '769567736@qq.com';
+        // $title = '这是右键title';
+        // $body = '这是邮件内容';
+        // $this->send_email($receiver, $title, $body);
+    }
 
 
 
-    // User DAO 
+
+    private function make_token($type, $user_id = null, $expired_time = null, $data = null)
+    {
+        $token = array();
+        $token['type'] = $type;
+        $token['user_id'] = $user_id ? (int)$user_id : 0;
+        $token['token'] = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $token['data'] = serialize($data);
+        $token['expired_time'] = $expired_time ? (int) $expired_time : 0;
+        $token['createdTime'] = time();
+        $token = $this->add_token($token);
+        return $token['token'];
+    }
+
+
+
+
+
+
+
+    // TABLE_USER DAO 
     public function add_user_dao($user)
     {
         return $this->ci->base_dao->insert(TABLE_USER, $user);
@@ -115,6 +154,13 @@ class User_lib extends MY_lib
     public function update_user($fields, $where)
     {
         return $this->ci->base_dao->update(TABLE_USER, $fields, $where);
+    }
+
+
+    // TABLE_USER_TOKEN DAO 
+    public function add_token($token)
+    {
+        return $this->ci->base_dao->insert(TABLE_USER_TOKEN, $token);
     }
 
 

@@ -39,7 +39,8 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 //数据库表名常量
 
-define('TABLE_USER',           'user');
+define('TABLE_USER',           		'user');
+define('TABLE_USER_TOKEN',      	'user_token');
 
 
 /* End of file constants.php */
