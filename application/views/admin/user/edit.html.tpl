@@ -66,5 +66,4 @@
     </div>
                 </td></tr>
         </table>
-    </div>
 {{/block}}
