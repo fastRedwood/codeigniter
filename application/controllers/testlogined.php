@@ -7,7 +7,8 @@ class Testlogined extends MY_Controller
     	
         $tes='我要登录才能看那！！！';
         $this->assign('tes',$tes);
-        $this->display('tes.html');
+        // $this->display('tes.html');
+        $this->display('web/index.html');
     }
 
 }

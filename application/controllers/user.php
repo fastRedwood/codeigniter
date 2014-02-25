@@ -14,9 +14,9 @@ class User extends MY_Controller
 	}
 
 	public function register()
-    {
-    	// 调试
-    	// $this->output->enable_profiler(TRUE);
+	{
+		// 调试
+		// $this->output->enable_profiler(TRUE);
 
 		$this->form_validation->set_rules('email', '邮箱', 'required|valid_email|callback_is_email_available');
 		$this->form_validation->set_rules('password', '密码', 'required|min_length[6]');
@@ -45,30 +45,11 @@ class User extends MY_Controller
 
         $this->display('web/register/index.html.tpl');
 
-    }
+    	}
 
-    // private function send_verify_email($user) {
-    //     $parameters = $this->config->item('parameters');
-    //     $token = $this->make_token('email-verify', $user['id'], strtotime('+1 day'));
-   
-    //     $emailTitle = "验证".$user['email']."在".$parameters['site_name']."的电子邮箱";
-    //     $emailBody = $this->renderView('RedwoodWebBundle:Register:verify-email.html.twig', array(
-    //         'user' => $user,
-    //         'token' => $token,
-    //     ));
 
-    //     $this->send_email($user['email'], $emailTitle, $emailBody);
 
-    //     $receiver = '769567736@qq.com';
-    //     $title = '这是右键title';
-    //     $body = '这是邮件内容';
-    //     $this->send_email($receiver, $title, $body);
-    // }
-
-   
-
-	public function login()
-
+	function login()
 	{	
 		
 		// 调试
